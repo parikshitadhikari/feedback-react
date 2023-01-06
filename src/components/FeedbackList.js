@@ -9,7 +9,7 @@ function FeedbackList(props) {
   return (
     <div className='feedback-list'>
         {props.feedback.map((item)=>(
-            <FeedbackItem key={item.id} item={item}/>
+            <FeedbackItem key={item.id} item={item} handleDelete={props.handleDelete}/>
         ))}
     </div>
   )
