@@ -12,15 +12,16 @@ function FeedbackForm() {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
 
-  const {addFeedback, feedbackEdit}=useContext(FeedbackContext)
+  const { addFeedback, feedbackEdit, updateFeedback } =
+    useContext(FeedbackContext);
 
-  useEffect(()=>{
-    if (feedbackEdit.edit===true) {
-      setBtnDisabled(false)
-      setText(feedbackEdit.item.text)
-      setRating(feedbackEdit.item.rating)
+  useEffect(() => {
+    if (feedbackEdit.edit === true) {
+      setBtnDisabled(false);
+      setText(feedbackEdit.item.text);
+      setRating(feedbackEdit.item.rating);
     }
-  },[feedbackEdit])
+  }, [feedbackEdit]);
 
   const handleTextChange = (e) => {
     if (text === "") {
@@ -34,19 +35,23 @@ function FeedbackForm() {
       setBtnDisabled(false);
     }
     setText(e.target.value);
-  }
+  };
 
-  const handleSubmit=(e)=>{
-    e.preventDefault()
-    if (text.trim().length>10) {
-        const newFeedback={
-            text,
-            rating
-        }
-        addFeedback(newFeedback)
-        setText('')
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim().length > 10) {
+      const newFeedback = {
+        text,
+        rating,
+      };
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback);
+      } else {
+        addFeedback(newFeedback);
+      }
+      setText("");
     }
-  }
+  };
 
   return (
     <Card>
